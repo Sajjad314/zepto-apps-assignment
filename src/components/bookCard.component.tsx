@@ -3,6 +3,8 @@ import { Book } from "../interface/bookCard.interface";
 import { useEffect, useState } from "react";
 import filledHeart from "../assets/heart_fiiled.png";
 import heart from "../assets/heart.png";
+import { useNavigate } from "react-router-dom";
+import { uiPath } from "../const/uiPath";
 
 interface BookCardProps {
   book: Book;
@@ -13,9 +15,10 @@ const BookCard: React.FC<BookCardProps> = ({ book, isWishListPage }) => {
   const coverImage =
     book.formats["image/jpeg"] || "https://via.placeholder.com/150";
   const authorName = book.authors[0]?.name || "Unknown Author";
-  const genre = book.subjects[0] || "Unknown Genre";
+  const genre = book.subjects || "Unknown Genre";
 
   const [isFavorited, setIsFavorited] = useState<boolean>(false);
+  const navigate = useNavigate();
 
   const handleFavoriteClick = () => {
     const favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
@@ -48,7 +51,7 @@ const BookCard: React.FC<BookCardProps> = ({ book, isWishListPage }) => {
         className="w-full h-48 object-cover rounded-md mb-4"
       />
       <div className=" flex justify-between">
-        <h3 className="text-xl font-bold mb-2">{book.title}</h3>
+        <h3 className="text-xl font-bold mb-2" onClick={()=>navigate(`book/${book.id}`)}>{book.title}</h3>
         {!isWishListPage && (
           <div>
             <img
