@@ -12,12 +12,12 @@ const Home: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [totalPages, setTotalPages] = useState<number>(0);
+  const [totalPages, setTotalPages] = useState<number>(1);
 
-  const fetchBooks = async () => {
+  const fetchBooks = async (pageNo:number, searchQuery:string) => {
     setLoading(true)
-    let url = `https://gutendex.com/books?page=${currentPage}`
-    if(searchTerm.length>0 ){
+    let url = `https://gutendex.com/books?page=${pageNo}`
+    if(searchQuery.length>0 ){
       url = url +`&search=${searchTerm}`
     }
     try {
@@ -39,7 +39,7 @@ const Home: React.FC = () => {
 
 
   useEffect(() => {
-    fetchBooks();
+    fetchBooks(1,"");
   }, []);
 
   // Handle Genre Change
@@ -70,10 +70,14 @@ const Home: React.FC = () => {
     setFilteredBooks(filtered);
   };
 
+  const handleSearch = () =>{
+    setCurrentPage(1);
+    fetchBooks(1,searchTerm);
+  }
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
-    fetchBooks()
+    fetchBooks(page,searchTerm)
   };
 
   return (
@@ -90,7 +94,7 @@ const Home: React.FC = () => {
           onChange={(e) => setSearchTerm(e.target.value.toLowerCase())}
           className="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
-        <button className=" p-1 rounded-md bg-blue-400 text-lg font-medium px-4" onClick={()=>fetchBooks()}>Search</button>
+        <button className=" p-1 rounded-md bg-blue-400 text-lg font-medium px-4" onClick={()=>handleSearch()}>Search</button>
         </div>
 
         <select
@@ -111,10 +115,10 @@ const Home: React.FC = () => {
       {!loading && error && <p className="text-center mt-8 text-red-500">{error}</p>}
       {!loading && <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {filteredBooks.map((book) => (
-          <BookCard key={book.id} book={book} />
+          <BookCard key={book.id} book={book} isWishListPage={false} />
         ))}
       </div>}
-      {filterBooks.length>0 && 
+      {filteredBooks.length>0 && 
         <Pagination
         currentPage={currentPage}
         totalPages={totalPages}
