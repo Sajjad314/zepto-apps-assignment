@@ -1,13 +1,12 @@
-import { ChangeEvent, useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import BookCard from "../components/bookCard.component";
 import { Book } from "../interface/bookCard.interface";
 import Pagination from "../components/pagination.component";
 
 const Home: React.FC = () => {
-  const [books, setBooks] = useState<Book[]>([]);
   const [filteredBooks, setFilteredBooks] = useState<Book[]>([]);
-  const [searchTerm, setSearchTerm] = useState<string>("");
-  const [selectedGenre, setSelectedGenre] = useState<string>("");
+  const [searchTerm, setSearchTerm] = useState<string>(localStorage.getItem("search") || "");
+  const [selectedGenre, setSelectedGenre] = useState<string>(localStorage.getItem("genre") || "");
   const [genres, setGenres] = useState<{ key: string; value: string }[]>([]);
 
   const [loading, setLoading] = useState<boolean>(true);
@@ -33,8 +32,6 @@ const Home: React.FC = () => {
       if (!response.ok) throw new Error("Failed to fetch books.");
       const data = await response.json();
       setTotalPages(Math.ceil(data.count / Math.max(data.results.length, 32)));
-
-      setBooks(data.results);
       setFilteredBooks(data.results);
       extractGenres(data.results);
       setError("");
@@ -76,12 +73,14 @@ const Home: React.FC = () => {
   const handleGenreChange = (genre: string) => {
     setSelectedGenre(genre);
     setCurrentPage(1)
+    localStorage.setItem("genre", genre);
     setIsDropdownOpen(false);
   };
 
   const handleSearch = () => {
     setCurrentPage(1);
     fetchBooks(1, searchTerm);
+    localStorage.setItem("search", searchTerm);
   };
 
   const handlePageChange = (page: number) => {
