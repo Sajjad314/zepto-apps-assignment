@@ -6,9 +6,10 @@ const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="bg-blue-600 p-4">
+    <nav className=" bg-teal-600 p-4">
       <div className="container mx-auto flex justify-between items-center">
-        <h1 className="text-white text-2xl font-bold">BookList App</h1>
+      <Link
+          to="/" className="text-white text-2xl font-bold cursor-pointer">Gutendex</Link>
         <button
           onClick={() => setIsOpen(!isOpen)}
           className="text-white md:hidden focus:outline-none"
@@ -22,13 +23,13 @@ const Navbar: React.FC = () => {
         >
           <Link
             to="/"
-            className="block text-white hover:bg-blue-700 px-3 py-2 rounded-md"
+            className="block text-white hover:bg-teal-700 px-3 py-2 rounded-md cursor-pointer"
           >
             Home
           </Link>
           <Link
             to="/wishlist"
-            className="block text-white hover:bg-blue-700 px-3 py-2 rounded-md"
+            className="block text-white hover:bg-teal-700 px-3 py-2 rounded-md cursor-pointer"
           >
             Wishlist
           </Link>
@@ -37,18 +38,18 @@ const Navbar: React.FC = () => {
       <div
         className={`${
           isOpen ? "block" : "hidden"
-        } md:hidden mt-2 space-y-2 bg-blue-500 p-4 rounded-md`}
+        } md:hidden mt-2 space-y-2 bg-teal-500 p-4 rounded-md cursor-pointer`}
       >
         <Link
           to="/"
-          className="block text-white hover:bg-blue-700 px-3 py-2 rounded-md"
+          className="block text-white hover:bg-teal-700 px-3 py-2 rounded-md cursor-pointer"
           onClick={() => setIsOpen(false)}
         >
           Home
         </Link>
         <Link
           to="/wishlist"
-          className="block text-white hover:bg-blue-700 px-3 py-2 rounded-md"
+          className="block text-white hover:bg-teal-700 px-3 py-2 rounded-md cursor-pointer"
           onClick={() => setIsOpen(false)}
         >
           Wishlist

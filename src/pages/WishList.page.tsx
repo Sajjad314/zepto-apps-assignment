@@ -40,7 +40,11 @@ const Wishlist: React.FC = () => {
     return (
       <div className="p-6 bg-gray-100 min-h-screen">
       <h2 className="text-3xl font-bold mb-6 text-center">Favorite Books</h2>
-      {loading && <p className="text-center mt-8">Loading books...</p>}
+      {loading && (
+        <div className="spinner">
+          <div className="spinner-icon"></div>
+        </div>
+      )}
       {!loading && error && <p className="text-center mt-8 text-red-500">{error}</p>}
       {!loading && <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {books.map((book) => (

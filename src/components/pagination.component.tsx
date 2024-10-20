@@ -10,13 +10,12 @@ interface PaginationProps {
     onPageChange,
   }) => {
     const getPageNumbers = () => {
-      const pagesToShow = 5; // Max number of pages to display
+      const pagesToShow = 5;
       const halfPages = Math.floor(pagesToShow / 2);
   
       let startPage = Math.max(1, currentPage - halfPages);
       let endPage = Math.min(totalPages, currentPage + halfPages);
   
-      // Adjust if the start or end is out of range
       if (currentPage <= halfPages) {
         endPage = Math.min(totalPages, pagesToShow);
       } else if (currentPage + halfPages >= totalPages) {
@@ -27,7 +26,7 @@ interface PaginationProps {
   
       if (startPage > 1) {
         pages.push(1);
-        if (startPage > 2) pages.push("..."); // Add ellipsis if there are hidden pages between 1 and startPage
+        if (startPage > 2) pages.push("...");
       }
   
       for (let i = startPage; i <= endPage; i++) {
@@ -35,7 +34,7 @@ interface PaginationProps {
       }
   
       if (endPage < totalPages) {
-        if (endPage < totalPages - 1) pages.push("..."); // Add ellipsis if there are hidden pages between endPage and totalPages
+        if (endPage < totalPages - 1) pages.push("...");
         pages.push(totalPages);
       }
   
@@ -44,20 +43,18 @@ interface PaginationProps {
   
     return (
       <div className="flex justify-center mt-6 space-x-2">
-        {/* Previous Button */}
         <button
           onClick={() => onPageChange(currentPage - 1)}
           disabled={currentPage === 1}
           className={`px-4 py-2 border rounded-md ${
             currentPage === 1
               ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-              : "bg-blue-500 text-white hover:bg-blue-600"
+              : "bg-teal-500 text-white hover:bg-teal-600"
           }`}
         >
           Previous
         </button>
   
-        {/* Page Numbers */}
         {getPageNumbers().map((page, index) => (
           <button
             key={index}
@@ -65,7 +62,7 @@ interface PaginationProps {
             disabled={typeof page !== "number"}
             className={`px-4 py-2 border rounded-md ${
               page === currentPage
-                ? "bg-blue-600 text-white"
+                ? "bg-teal-600 text-white"
                 : "bg-gray-200 hover:bg-gray-300"
             } ${typeof page !== "number" ? "cursor-default" : ""}`}
           >
@@ -73,14 +70,13 @@ interface PaginationProps {
           </button>
         ))}
   
-        {/* Next Button */}
         <button
           onClick={() => onPageChange(currentPage + 1)}
           disabled={currentPage === totalPages}
           className={`px-4 py-2 border rounded-md ${
             currentPage === totalPages
               ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-              : "bg-blue-500 text-white hover:bg-blue-600"
+              : "bg-teal-500 text-white hover:bg-teal-600"
           }`}
         >
           Next

@@ -3,7 +3,7 @@ import { Book } from "../interface/bookCard.interface";
 import { useEffect, useState } from "react";
 import filledHeart from "../assets/heart_fiiled.png";
 import heart from "../assets/heart.png";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 interface BookCardProps {
   book: Book;
@@ -17,7 +17,6 @@ const BookCard: React.FC<BookCardProps> = ({ book, isWishListPage }) => {
   const genre = book.subjects || "Unknown Genre";
 
   const [isFavorited, setIsFavorited] = useState<boolean>(false);
-  const navigate = useNavigate();
 
   const handleFavoriteClick = () => {
     const favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
@@ -50,13 +49,13 @@ const BookCard: React.FC<BookCardProps> = ({ book, isWishListPage }) => {
         className="w-full h-48 object-cover rounded-md mb-4"
       />
       <div className=" overflow-hidden mx-4 mb-2">
-        <div className=" flex justify-between">
-          <h3
-            className="text-xl font-bold mb-2"
-            onClick={() => navigate(`book/${book.id}`)}
+        <div className=" flex gap-2 justify-between">
+          <Link
+            to={`/book/${book.id}`}
+            className="text-xl font-bold mb-2 cursor-pointer"
           >
             {book.title}
-          </h3>
+          </Link>
           {!isWishListPage && (
             <div>
               <img
@@ -74,7 +73,7 @@ const BookCard: React.FC<BookCardProps> = ({ book, isWishListPage }) => {
           <span className="font-semibold">Author:</span> {authorName}
         </p>
         <p className="text-gray-700 mb-1">
-          <span className="font-semibold">Genre:</span> {genre}
+          <span className="font-semibold">Genre:</span> {genre.join(", ")}
         </p>
         <p className="text-gray-500 text-sm">ID: {book.id}</p>
       </div>

@@ -4,6 +4,7 @@ import Navbar from "./components/navbar.component";
 import Home from "./pages/Home.page";
 import Wishlist from "./pages/WishList.page";
 import BookDetails from "./pages/BookDetails.page";
+import "./style/styles.css"
 
 const App: React.FC = () => {
   return (
